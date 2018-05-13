@@ -18,10 +18,11 @@ var pie = d3.pie().sort(null);
 var svg = d3.select("#chart").append("svg")
   .attr("width", width-5)
   .attr("height", height-5)
-  .call(d3.zoom().on("zoom", function () {
+
+/*  .call(d3.zoom().on("zoom", function () {
     svg.attr("transform", d3.event.transform)
   }))
-
+*/
 var defs = svg.append("defs");
 var filter = defs.append("filter")
   .attr("id", "drop-shadow")
