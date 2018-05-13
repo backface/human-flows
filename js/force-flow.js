@@ -7,11 +7,16 @@ var w = window,
     height = w.innerHeight|| e.clientHeight|| g.clientHeight;
     height -= 24;
 
+
 var colorPair = ["green", "red",];
 var radius = {min: 5, max: 18};
+if (width<768)
+	radius = {min: 2, max: 8};	
+
 var states = null;
 var projection = d3.geoMercator();
-var arc = d3.arc().innerRadius(0).outerRadius(50);
+
+var arc = d3.arc().innerRadius(0).outerRadius(radius.max);
 var color = d3.scaleOrdinal(colorPair);
 var pie = d3.pie().sort(null);
 
@@ -62,7 +67,7 @@ var legendLabels = ["Immigration", "Emigration"];
 var legendColors = colorPair;
 
 var legend = svg.append("g")
-  .attr("transform", "translate(" + (width - 200) + "," + (height - 50) + ")");
+  .attr("transform", "translate(" + (22) + "," + (140) + ")");
 
 legendLabels.forEach(function(continent, i){
   var legendRow = legend.append("g")
