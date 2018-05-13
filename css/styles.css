@@ -1,0 +1,74 @@
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f9f9f9;
+  margin:0;
+  padding:0;
+}
+svg {margin:0:padding:0}
+
+
+select {
+   background: transparent;
+   margin-top:10px;
+   width: 200px;
+   padding: 5px;
+   line-height: 1;
+   border: 1;
+   border-radius: 0;
+   height: 34px;
+   }
+   
+#footer {
+	position:absolute;
+	bottom:0px;
+	width:100%;
+	font-size:0.8em;
+	text-align: center;
+	color:#666;
+	padding:3px 0px;
+}
+
+#header {
+	position:absolute;
+	top:0px;
+	width:100%;
+	text-align: left;
+}
+#header h1 {margin:5px 0px;padding:0px 20px}
+#header p {margin:5px 0px;padding:0px 20px}
+#header div {margin:5px 0px;padding:0px 20px}
+
+.land {
+  fill: #eee;
+}
+
+.border {
+  fill: none;
+  stroke-width: 1px;
+}
+
+.interior {
+  stroke: #ddd;
+}
+
+.exterior {
+  stroke: #bbbbbb;
+}
+
+.arc {
+	stroke: #333;
+	opacity: 0.9;
+}
+
+.node {
+	opacity: 1;
+}
+
+.hidden {
+	opacity: .0;
+}
+
+.linkhidden {
+	opacity: .0;
+}
