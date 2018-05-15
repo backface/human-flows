@@ -34,7 +34,6 @@ select {
 #header {
 	position:absolute;
 	top:0px;
-	width:100%;
 	text-align: left;
 }
 #header h1 {margin:5px 0px;padding:0px 20px}
