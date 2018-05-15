@@ -150,7 +150,7 @@ function drawMap(error, map) {
 
 function initChart() {
 	
-	plot.attr("transform","scale(1.1),translate("+ -width/15 + "," + -height/20 + ")")
+	plot.attr("transform","scale(1.1),translate("+ -width/15 + "," + 20 + ")")
 			
 	linksEl = plot.append("g").attr("id", "links");
 	nodesEl = plot.append("g").attr("id", "pie");
