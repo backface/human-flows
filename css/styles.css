@@ -35,10 +35,13 @@ select {
 	position:absolute;
 	top:0px;
 	text-align: left;
+	text-transform:uppercase;
 }
-#header h1 {margin:5px 0px;padding:0px 20px}
+#header h1 {margin:5px 20px;padding:0px 0px; border-bottom:1px solid #666;font-size:1.6em}
 #header p {margin:5px 0px;padding:0px 20px}
 #header div {margin:5px 0px;padding:0px 20px}
+
+.legend {font-size:0.8em}
 
 .land {
   fill: #eee;

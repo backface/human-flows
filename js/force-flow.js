@@ -1,4 +1,4 @@
-
+ 
 var w = window,
     d = document,
     e = d.documentElement,
@@ -8,7 +8,7 @@ var w = window,
     height -= 24;
 
 
-var colorPair = ["green", "red",];
+var colorPair = ["#5799b7", "#c74744",];
 var radius = {min: 5, max: 18};
 if (width<768)
 	radius = {min: 2, max: 8};	
@@ -71,6 +71,7 @@ var legend = svg.append("g")
 
 legendLabels.forEach(function(continent, i){
   var legendRow = legend.append("g")
+    .attr("class", "legend")
     .attr("transform", "translate(0, " + (i * 20) + ")");
 
   legendRow.append("rect")

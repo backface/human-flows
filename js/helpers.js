@@ -38,7 +38,8 @@ function gradient(defs, id, p, hasmid=true){
   d3.select(idtag)
 	  .append("stop")
 	  .attr("class","end")
-	  .attr("stop-color", "orange")
+	  .attr("stop-color", "#999") //#46272f")
+	  //.attr("stop-color", "orange")
 	  .attr("offset", "50%")
 	  .attr("stop-opacity", hasmid ? 0.02 : 0.4);
 
