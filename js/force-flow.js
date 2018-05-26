@@ -67,7 +67,7 @@ var legendLabels = ["Immigration", "Emigration"];
 var legendColors = colorPair;
 
 var legend = svg.append("g")
-  .attr("transform", "translate(" + (22) + "," + (140) + ")");
+  .attr("transform", "translate(" + (22) + "," + (200) + ")");
 
 legendLabels.forEach(function(continent, i){
   var legendRow = legend.append("g")
@@ -158,8 +158,8 @@ function initChart() {
 }
 
 function drawData(nodes, links) {
-  plot.select("g#links").remove();
-  plot.select("g#pie").remove();
+  linksEl.remove();
+  nodesEl.remove();
   
   if (typeof(nodes_sim) != "undefined")
 	nodes_sim.stop();
@@ -220,6 +220,7 @@ function drawData(nodes, links) {
     });
 
   link_layout.nodes(bundle.nodes).force("link").links(bundle.links);
+  
 
 
   // draw nodes
@@ -288,6 +289,7 @@ function drawData(nodes, links) {
         .on("end", function(d) {
           console.log("nodes complete!");
         });
+    nodes_sim.restart();
 }
 
 

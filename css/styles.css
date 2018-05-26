@@ -35,10 +35,12 @@ select {
 	position:absolute;
 	top:0px;
 	text-align: left;
-	text-transform:uppercase;
+	
 }
-#header h1 {margin:5px 20px;padding:0px 0px; border-bottom:1px solid #666;font-size:1.6em}
-#header p {margin:5px 0px;padding:0px 20px}
+#header h1 {margin:25px 20px 0px 20px ;padding:0px 0px; border-bottom:1px solid #666;font-size:1.6em;text-transform:uppercase;}
+#header p {margin:5px 20px;padding:0px 0px;line-height:1.5em}
+#header .caption {color:#666; font-size:0.9em;background:rgba(255,255,255,0.4);line-height:1.5em}
+#header .caption a {font-size: 0.9em}
 #header div {margin:5px 0px;padding:0px 20px}
 
 .legend {font-size:0.8em}

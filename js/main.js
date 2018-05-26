@@ -3,15 +3,30 @@ var nodesN = [];
 var nodes_all = [];
 var links_all = [];
 var links = [];
+var refugees = false;
 
 // adjust links to original data sources
 var urls = {
-  nodes: "data/mycountries.csv",
+  nodes: "data/countries.csv",
   links: "data/links.csv",
   world: "data/world-topo-110m.json"
 };
 
+var hash = window.location.hash;
+if(hash) {
+  if (hash == "#refugees2015")
+	urls = {
+	  nodes: "data/refugee_countries.csv",
+	  links: "data/refugee_links.csv",
+	  world: "data/world-topo-110m.json"
+	};
+	refugees = true;
+	d3.select(".caption").html("Flow of migrants, refugees and asylum applicants in 2015.<br /> see also: <a href='#'>Migration flows for five-year periods, 1990 to 2010</a>")
+} 
 
+window.onhashchange = function() { 
+	window.location.reload()
+}
 
 function initMe() {
   d3.json(urls.world, function (error, data) {
@@ -35,10 +50,10 @@ function initMe() {
 		  if(error) throw error;
 		  
 		  l = d3.nest()
-			.key(function(d) { return d.period}).sortKeys(d3.descending)
+			.key(function(d) { return d.label}).sortKeys(d3.descending)
 			.entries(l);
 
-		  var list = d3.select("p")
+		  var list = d3.select("#select")
 			.append("select")
 			.on('change', function() {
 				updateSelection(d3.select(this).property('value'));
@@ -72,8 +87,14 @@ function wrangleData(i=0) {
   nodesN = nodes_all.slice(0);
   links = JSON.parse(JSON.stringify( links_all[i].values ));
  
+  // (re) set values
+  nodesN.forEach( function(d) {
+	d.in = 0;
+	d.out = 0;
+	d.total = 0;
+  })
   
-  var by_code = d3.map(nodes_all, function(d) { return d.code; }); 	
+  var by_code = d3.map(nodesN, function(d) { return d.code; }); 	
   
   console.log("Loaded " + by_code.size() + " nodes.");
 
@@ -127,15 +148,17 @@ function wrangleData(i=0) {
   nodesN.sort(bytotal);
   //nodes = nodes.slice(0, 150);
 
-  min_total = 80000;
+  if (!refugees) {
+	min_total = 80000;
 
-  // reset map to only contain nodes post filter
-  old = nodesN.length;
-  nodesN = nodesN.filter(function(d) {
-    return (by_code.get(d.code).total) > min_total
-  });
-  console.log("Removed " + (old - nodesN.length) + " nodes with total flows less than "+ min_total);
-   
+	  // reset map to only contain nodes post filter
+	  old = nodesN.length;
+	  nodesN = nodesN.filter(function(d) {
+		return (by_code.get(d.code).total) > min_total
+	  });
+	  console.log("Removed " + (old - nodesN.length) + " nodes with total flows less than "+ min_total);
+  }
+	   
   // calculate projected x, y pixel locations
   nodesN.forEach(function(d) {
     var coords = projection([d.longitude, d.latitude]);
@@ -147,12 +170,15 @@ function wrangleData(i=0) {
   
 
   // reset map to only contain nodes post filter
-  min_value = 500;
-  old = links.length
-  links = links.filter(function(d) {
-    return d.count > min_value
-  });
-  console.log("Removed " + (old - links.length) + " links with value smaller than "+ min_value);
+  
+  if (!refugees) {
+	  min_value = 500;
+	  old = links.length
+	  links = links.filter(function(d) {
+		return d.count > min_value
+	  });
+	  console.log("Removed " + (old - links.length) + " links with value smaller than "+ min_value);
+   }
 
   // filter out links that do not go between remaining nodes
   old = links.length;
@@ -164,7 +190,6 @@ function wrangleData(i=0) {
   console.log("Removed " + (old - links.length) + " links between nodes not shown");
   console.log("Currently " + nodesN.length + " nodes remaining.");
   console.log("Currently " + links.length + " links remaining.");
-
 
   drawData(by_code.values(), links);
 

@@ -30,13 +30,13 @@ if generateCountryFile:
 				countries[i]["latlng"][1]
 		)
 		
-	outfile = open("mycountries.json", "w")	
-	json.dump(objout, outfile, indent=2)
-	outfile.close()
-
-	#outfile = open("mycountries.csv", "w")	
-	#outfile.write(csvout)
+	#outfile = open("mycountries.json", "w")	
+	#json.dump(objout, outfile, indent=2)
 	#outfile.close()
+
+	outfile = open("countries.csv", "w")	
+	outfile.write(csvout)
+	outfile.close()
 
 	
 
@@ -64,7 +64,7 @@ if generateFlowsFile:
 
 	]
 	lines = 0
-	csvout = "source,target,count,period\n"
+	csvout = "source,target,count,label\n"
 
 	print reader.next()
 	#sortedlist = sorted(reader, key=lambda row: int(row[15]), reverse=True)
@@ -101,9 +101,9 @@ if generateFlowsFile:
 				
 		lines += 1
 
-	outfile = open("links.json", "w")	
-	json.dump(links, outfile, indent=2)
-	outfile.close()
+	#outfile = open("links.json", "w")	
+	#json.dump(links, outfile, indent=2)
+	#outfile.close()
 
 	outfile = open("links.csv", "w")	
 	outfile.write(csvout)
