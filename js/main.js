@@ -150,14 +150,16 @@ function wrangleData(i=0) {
 
   if (!refugees) {
 	min_total = 80000;
+  } else {
+	min_total = 0;
 
-	  // reset map to only contain nodes post filter
-	  old = nodesN.length;
-	  nodesN = nodesN.filter(function(d) {
-		return (by_code.get(d.code).total) > min_total
-	  });
-	  console.log("Removed " + (old - nodesN.length) + " nodes with total flows less than "+ min_total);
   }
+  // reset map to only contain nodes post filter
+  old = nodesN.length;
+  nodesN = nodesN.filter(function(d) {
+	return (by_code.get(d.code).total) > min_total
+  });
+  console.log("Removed " + (old - nodesN.length) + " nodes with total flows less than "+ min_total);
 	   
   // calculate projected x, y pixel locations
   nodesN.forEach(function(d) {
@@ -171,14 +173,18 @@ function wrangleData(i=0) {
 
   // reset map to only contain nodes post filter
   
-  if (!refugees) {
+  if (refugees) {
+	  min_value = 0;
+  } else {
 	  min_value = 500;
-	  old = links.length
-	  links = links.filter(function(d) {
-		return d.count > min_value
-	  });
-	  console.log("Removed " + (old - links.length) + " links with value smaller than "+ min_value);
-   }
+  }
+  
+  old = links.length
+  links = links.filter(function(d) {
+	return d.count > min_value
+  });
+  console.log("Removed " + (old - links.length) + " links with value smaller than "+ min_value);
+
 
   // filter out links that do not go between remaining nodes
   old = links.length;
