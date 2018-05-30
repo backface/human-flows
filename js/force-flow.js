@@ -9,9 +9,9 @@ var w = window,
 
 
 var colorPair = ["#5799b7", "#c74744",];
-var radius = {min: 5, max: 18};
+var radius = {min: 6, max: 30};
 if (width<768)
-	radius = {min: 2, max: 8};	
+	radius = {min: 2, max: 10};	
 
 var states = null;
 var projection = d3.geoMercator();
@@ -226,8 +226,8 @@ function drawData(nodes, links) {
   // draw nodes
 
   var scale = d3.scaleSqrt()
-  .domain(d3.extent(nodes, function(d) { return d.out; }))
-  .range([radius.min, radius.max]);
+	  .domain(d3.extent(nodes, function(d) { console.log(d); return d.total; }))
+	  .range([radius.min, radius.max]);
   
   nodesEl = plot.append("g").attr("id", "pie")
 		.selectAll('arc')
@@ -272,10 +272,10 @@ function drawData(nodes, links) {
 		.attr("fill", function(d) { 
 			return color(d.data.i); })
 
-
+	nodes_sim = null;
     nodes_sim = d3.forceSimulation()
-        .force("collide", d3.forceCollide().radius(function(d) {   
-			 return scale(d.total) + 0.1;       
+        .force("collide", d3.forceCollide().radius(function(d) {  	
+			 return scale(d.total) + 0.2;       
           })
         .iterations(2)
         
