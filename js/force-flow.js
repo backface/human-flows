@@ -226,7 +226,7 @@ function drawData(nodes, links) {
   // draw nodes
 
   var scale = d3.scaleSqrt()
-	  .domain(d3.extent(nodes, function(d) { console.log(d); return d.total; }))
+	  .domain(d3.extent(nodes, function(d) { return d.total; }))
 	  .range([radius.min, radius.max]);
   
   nodesEl = plot.append("g").attr("id", "pie")

@@ -3,7 +3,7 @@ var nodesN = [];
 var nodes_all = [];
 var links_all = [];
 var links = [];
-var refugees = false;
+var refugee_set = false;
 
 // adjust links to original data sources
 var urls = {
@@ -12,16 +12,27 @@ var urls = {
   world: "data/world-topo-110m.json"
 };
 
-var hash = window.location.hash;
+var nkeys = ["2005-2010","2000-2005", "1995-2000","1990-1995",]
+var rkeys = ["Refugees2015", "Migrants2015", "Asylumapplicants2015", ]
+
+
+
+var hash = window.location.hash.replace("#","");
+
 if(hash) {
-  if (hash == "#refugees2015")
+  if (rkeys.indexOf(hash) > -1) {
 	urls = {
 	  nodes: "data/refugee_countries.csv",
 	  links: "data/refugee_links.csv",
 	  world: "data/world-topo-110m.json"
 	};
-	refugees = true;
+	refugee_set= true;
+	nkeys = rkeys;
 	d3.select(".caption").html("Flow of migrants, refugees and asylum applicants in 2015.<br /> see also: <a href='#'>Migration flows for five-year periods, 1990 to 2010</a>")
+	
+	if (hash == "Migrants2015")
+		refugee_set = false;
+  }
 } 
 
 window.onhashchange = function() { 
@@ -63,7 +74,9 @@ function initMe() {
 			.data(l)
 			.enter()
 			.append("option")		
-			.attr("value", function(d,i) {return i;})
+			.attr("value", function(d,i) {return d.key.replace("(","").replace(")","").replace(" ","").replace(" ","");})
+			.attr("selected", function(d,i) { return hash == d.key.replace("(","").replace(")","").replace(" ","").replace(" ","") ? "true" : null })
+
 			.html(function(d) {return d.key;})
    		    
 		
@@ -71,13 +84,16 @@ function initMe() {
 		  links_all = l;
 		  
 		  initChart();
-		  wrangleData(0);   		  
+
+		  wrangleData(Math.max(0, nkeys.indexOf(hash)));   		  
 	  });
   });
 }
 
 function updateSelection(i) {
-	wrangleData(i);
+	window.location.hash = i;
+	window.location.reload();
+	//wrangleData(i);
 }
 
 function wrangleData(i=0) {
@@ -148,7 +164,7 @@ function wrangleData(i=0) {
   nodesN.sort(bytotal);
   //nodes = nodes.slice(0, 150);
 
-  if (!refugees) {
+  if (!refugee_set) {
 	min_total = 80000;
   } else {
 	min_total = 0;
@@ -173,10 +189,10 @@ function wrangleData(i=0) {
 
   // reset map to only contain nodes post filter
   
-  if (refugees) {
+  if (refugee_set) {
 	  min_value = 0;
   } else {
-	  min_value = 500;
+	  min_value = 2000;
   }
   
   old = links.length
